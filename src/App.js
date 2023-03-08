@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Nav from './components/Nav';
 import HomeBackground from './assets/images/home-background.png';
+import Banner from './components/Banner';
 
 const App = () => {
   return (
     <div className="App">
       <Container>
         <Nav />
+        <Banner />
       </Container>
     </div>
   );
