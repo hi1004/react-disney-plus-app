@@ -10,7 +10,8 @@ ${css`
   body {
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 1.4;
-    background-color: #fff;
+    background-color: #040714;
+    color: #f9f9f9;
   }
   a {
     text-decoration: none;
