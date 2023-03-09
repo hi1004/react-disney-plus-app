@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdPlayCircleOutline } from 'react-icons/md';
+import YouTube from 'react-youtube';
 import axios from '../api/axios';
 import requests from '../api/request';
 import usePromise from '../hooks/usePromise';
@@ -8,15 +9,28 @@ import { media } from '../styles/theme';
 
 const Banner = () => {
   const [movie, setMovie] = useState([]);
+  const [isStart, setIsStart] = useState(false);
   const [loading, response, error] = usePromise(() => {
     return axios.get(requests.fetchNowPlaying);
   }, []);
 
   const fetchData = async () => {
+    const filterVideoId = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const value of response.data.results) {
+      const { id } = value;
+      // eslint-disable-next-line no-await-in-loop
+      const res = await axios.get(`movie/${id}`, {
+        params: { append_to_response: 'videos' },
+      });
+      const videoData = res.data.videos.results;
+      if (videoData.length !== 0) {
+        filterVideoId.push(value.id);
+      }
+    }
+
     const movieId =
-      response.data.results[
-        Math.floor(Math.random() * response.data.results.length)
-      ].id;
+      filterVideoId[Math.floor(Math.random() * filterVideoId.length)];
 
     const { data: movieDetail } = await axios.get(`movie/${movieId}`, {
       params: { append_to_response: 'videos' },
@@ -30,6 +44,12 @@ const Banner = () => {
       fetchData();
     }
   }, [response]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsStart(true);
+    }, 3000);
+  }, []);
 
   if (loading)
     return (
@@ -51,6 +71,34 @@ const Banner = () => {
         backgroundSize: 'cover',
       }}
     >
+      <div className="youtube__area">
+        <YouTube
+          className={`player${isStart ? ' active' : ''}`}
+          id="player"
+          key={movie.videos?.results[0].key}
+          videoId={movie.videos?.results[0].key}
+          title={movie.title}
+          opts={{
+            playerVars: {
+              autoplay: 1,
+              modestbranding: 1,
+              start: 0,
+              fs: 0,
+              controls: 0,
+            },
+          }}
+          onReady={e => {
+            e.target.playVideo();
+            e.target.mute();
+          }}
+          disablekb
+          onEnd={() => {
+            setIsStart(false);
+          }}
+        />
+        <div className="youtube__cover" />
+      </div>
+
       <BannerContents>
         <h1 className="title">
           {movie.title || movie.name || movie.original_name}
@@ -80,6 +128,40 @@ const BannerHeader = styled.header`
   object-fit: contain;
   transition: 0.2s;
   position: relative;
+
+  .youtube__area {
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 0;
+      padding-top: 56.25%;
+    }
+  }
+
+  .youtube__cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .player {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+  #player {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -50px;
+    left: 0;
+    z-index: 0;
+  }
 
   .fadeBottom {
     height: 40vw;
@@ -200,10 +282,14 @@ const BannerContents = styled.div`
       align-items: center;
       padding: 0 2rem;
       .title {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
+        text-align: center;
       }
       .description {
         display: none;
+      }
+      .button {
+        padding: 0.5rem 1rem !important;
       }
     `}
   `}
