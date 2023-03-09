@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { MdPlayCircleOutline } from 'react-icons/md';
 import axios from '../api/axios';
 import requests from '../api/request';
 import usePromise from '../hooks/usePromise';
@@ -60,7 +61,8 @@ const Banner = () => {
         <div className="buttons">
           {movie.videos?.results[0]?.key && (
             <button type="button" className="button paly">
-              Paly
+              <MdPlayCircleOutline className="play__icon" />
+              <div className="play">再生</div>
             </button>
           )}
         </div>
@@ -95,6 +97,9 @@ const BannerHeader = styled.header`
 
   ${media.desktop`
     height: 76.25vw;
+    .fadeBottom { 
+      height: 60vw;
+    }
   `}
   ${media.tablet`
     height: 100vw;
@@ -109,51 +114,67 @@ const BannerContents = styled.div`
   flex-direction: column;
   gap: 2rem;
   position: absolute;
-  bottom: 18vw;
-  left: 40px;
+  bottom: 20vw;
+  padding: 0 70px;
   z-index: 1;
 
   .title {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 800;
   }
 
   .description {
     width: 45rem;
     line-height: 1.3;
-    font-size: 1rem;
-    max-width: 400px;
+    font-size: 1.5rem;
   }
 
   .buttons {
     display: flex;
     flex-direction: row;
+
     .button {
+      font-family: 'Noto Sans JP', sans-serif;
       display: flex;
       justify-content: start;
       align-items: center;
+      gap: 1rem;
       font-size: 1rem;
-      font-weight: 700;
-      padding: 0.4rem 1rem;
+      font-weight: 600;
       margin-right: 1rem;
       transition: all 0.2s;
+      padding: 0.8rem 1.5rem;
+      background-color: #fff;
+      align-items: center;
+      border-radius: 4px;
 
-      &.play {
-        background-color: ${({ theme }) => theme.colors.white};
-        color: ${({ theme }) => theme.colors.black};
+      .play__icon {
+        font-size: 2rem;
       }
 
       &:hover {
         color: ${({ theme }) => theme.colors.black};
-        background-color: rgba(170, 170, 170, 0.9);
+        background-color: rgba(224, 224, 224, 0.9);
       }
     }
   }
 
+  ${media.desktop`
+  .title {
+        font-size: 3.2rem;
+      }
+      .description {
+        font-size: 1rem;
+      }
+  `}
+
   ${media.tablet`
     ${css`
+      .title {
+        font-size: 3rem;
+      }
       .description {
-        font-size: 0.8rem;
+        font-size: 1rem;
         width: auto;
       }
       .info {

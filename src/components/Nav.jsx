@@ -30,15 +30,30 @@ const NavWrapper = styled.nav`
   left: 0;
   top: 0;
   right: 0;
-  height: 70px;
+  height: 80px;
   transition: background-color 0.4s;
   background-color: ${props => (props.show ? '#090b13' : 'transparent')};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 36px;
+  padding: 0 60px;
   letter-spacing: 16px;
   z-index: 3;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: linear-gradient(
+      180deg,
+      rgba(9, 11, 19, 0.7) 10%,
+      transparent
+    );
+    z-index: -1;
+  }
 `;
 const Logo = styled.a`
   padding: 0;
