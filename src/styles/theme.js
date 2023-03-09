@@ -6,7 +6,7 @@ const sizes = {
   phone: 600,
 };
 
-const media = Object.entries(sizes).reduce((acc, [key, value]) => {
+export const media = Object.entries(sizes).reduce((acc, [key, value]) => {
   return {
     ...acc,
     [key]: (first, ...interpolations) => css`
@@ -48,7 +48,6 @@ const theme = {
   fontSizes,
   colors,
   common,
-  media,
 };
 
 export default theme;

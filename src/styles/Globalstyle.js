@@ -12,6 +12,7 @@ ${css`
     line-height: 1.4;
     background-color: #040714;
     color: #f9f9f9;
+    word-break: break-word;
   }
   a {
     text-decoration: none;
@@ -19,8 +20,8 @@ ${css`
   }
   button {
     border: none;
-    background: none;
     padding: 0;
+    outline: none;
     cursor: pointer;
   }
 `}
