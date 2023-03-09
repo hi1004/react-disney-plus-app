@@ -4,6 +4,7 @@ import Nav from './components/Nav';
 import HomeBackground from './assets/images/home-background.png';
 import Banner from './components/Banner';
 import theme from './styles/theme';
+import Category from './components/Category';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Container>
           <Nav />
           <Banner />
+          <Category />
         </Container>
       </ThemeProvider>
     </div>

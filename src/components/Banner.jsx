@@ -206,7 +206,6 @@ const BannerContents = styled.div`
   }
 
   .description {
-    width: 45rem;
     line-height: 1.3;
     font-size: 1.5rem;
   }
