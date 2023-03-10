@@ -6,6 +6,8 @@ import axios from '../api/axios';
 import requests from '../api/request';
 import usePromise from '../hooks/usePromise';
 import { media } from '../styles/theme';
+import { Loding } from '../styles/Globalstyle';
+import Category from './Category';
 
 const truncate = (str, n) => {
   return str?.length > n ? `${str.substring(0, n)}...` : str;
@@ -117,6 +119,9 @@ const Banner = () => {
         </div>
       </BannerContents>
       <div className="fadeBottom" />
+      <div className="category">
+        <Category />
+      </div>
     </BannerHeader>
   );
 };
@@ -180,8 +185,12 @@ const BannerHeader = styled.header`
 
   ${media.desktop`
     height: 76.25vw;
+   
     .fadeBottom { 
       height: 60vw;
+    }
+    .category {
+      display: none;
     }
   `}
   ${media.tablet`
@@ -294,26 +303,4 @@ const BannerContents = styled.div`
       }
     `}
   `}
-`;
-
-const Loding = styled.div`
-  width: 35px;
-  height: 35px;
-  border: 5px solid #fff;
-  position: absolute;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: loadingAnimation 0.6s infinite linear;
-  position: absolute;
-  inset: 50%;
-  transform: translate(-50%, -50%);
-
-  @keyframes loadingAnimation {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 `;

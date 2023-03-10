@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
@@ -28,3 +28,23 @@ ${css`
 `;
 
 export default GlobalStyle;
+export const Loding = styled.div`
+  width: 35px;
+  height: 35px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: loadingAnimation 0.6s infinite linear;
+  position: absolute;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+
+  @keyframes loadingAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;

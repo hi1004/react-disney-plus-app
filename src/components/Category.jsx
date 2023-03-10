@@ -64,7 +64,7 @@ const Container = styled.div`
     ${css`
       position: relative;
       bottom: 0;
-      padding: 10px 70px;
+      padding: 40px 70px;
       background: url(${HomeBackground}) center / cover no-repeat;
       grid-template-columns: repeat(2, 1fr);
     `}
