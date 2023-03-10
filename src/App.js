@@ -5,6 +5,7 @@ import HomeBackground from './assets/images/home-background.png';
 import Banner from './components/Banner';
 import theme from './styles/theme';
 import Category from './components/Category';
+import Row from './components/Row';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Nav />
           <Banner />
           <Category />
+          <Row />
         </Container>
       </ThemeProvider>
     </div>

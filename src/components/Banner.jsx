@@ -7,6 +7,9 @@ import requests from '../api/request';
 import usePromise from '../hooks/usePromise';
 import { media } from '../styles/theme';
 
+const truncate = (str, n) => {
+  return str?.length > n ? `${str.substring(0, n)}...` : str;
+};
 const Banner = () => {
   const [movie, setMovie] = useState([]);
   const [isStart, setIsStart] = useState(false);
@@ -59,9 +62,6 @@ const Banner = () => {
     );
 
   if (error) return <div>error</div>;
-  const truncate = (str, n) => {
-    return str?.length > n ? `${str.substring(0, n)}...` : str;
-  };
 
   return (
     <BannerHeader
@@ -71,33 +71,34 @@ const Banner = () => {
         backgroundSize: 'cover',
       }}
     >
-      <div className="youtube__area">
-        <YouTube
-          className={`player${isStart ? ' active' : ''}`}
-          id="player"
-          key={movie.videos?.results[0].key}
-          videoId={movie.videos?.results[0].key}
-          title={movie.title}
-          opts={{
-            playerVars: {
-              autoplay: 1,
-              modestbranding: 1,
-              start: 0,
-              fs: 0,
-              controls: 0,
-            },
-          }}
-          onReady={e => {
-            e.target.playVideo();
-            e.target.mute();
-          }}
-          disablekb
-          onEnd={() => {
-            setIsStart(false);
-          }}
-        />
-        <div className="youtube__cover" />
-      </div>
+      {isStart && (
+        <div className="youtube__area">
+          <YouTube
+            className={`player${isStart ? ' active' : ''}`}
+            id="player"
+            key={movie.videos?.results[0].key}
+            videoId={movie.videos?.results[0].key}
+            title={movie.title}
+            opts={{
+              playerVars: {
+                autoplay: 1,
+                modestbranding: 1,
+                start: 0,
+                fs: 0,
+                controls: 0,
+              },
+            }}
+            onReady={e => {
+              e.target.playVideo();
+              e.target.mute();
+            }}
+            onEnd={() => {
+              setIsStart(false);
+            }}
+          />
+          <div className="youtube__cover" />
+        </div>
+      )}
 
       <BannerContents>
         <h1 className="title">
@@ -208,6 +209,7 @@ const BannerContents = styled.div`
   .description {
     line-height: 1.3;
     font-size: 1.5rem;
+    max-width: 600px;
   }
 
   .buttons {
