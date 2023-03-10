@@ -4,13 +4,14 @@ import logo from '../assets/images/logo.svg';
 
 const Nav = () => {
   const [show, setShow] = useState(false);
+  const scrollHandler = () => {
+    const isShow = window.scrollY > 50;
+    setShow(isShow);
+  };
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      const isShow = window.scrollY > 50;
-      setShow(isShow);
-    });
+    window.addEventListener('scroll', () => scrollHandler);
     return () => {
-      window.removeEventListener('scroll', () => {});
+      window.removeEventListener('scroll', () => scrollHandler);
     };
   }, []);
 
