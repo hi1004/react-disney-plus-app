@@ -5,7 +5,6 @@ import Banner from '../components/Banner';
 import Category from '../components/Category';
 import Nav from '../components/Nav';
 import Row from '../components/Row';
-import Footer from '../components/Footer';
 import { media } from '../styles/theme';
 import HomeBackground from '../assets/images/home-background.png';
 
@@ -31,7 +30,6 @@ const MainPage = () => {
           fetchUrl={request.fetchComedyMovies}
         />
       </RowWrap>
-      <Footer />
     </Container>
   );
 };

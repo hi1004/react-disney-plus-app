@@ -26,6 +26,9 @@ const Footer = () => {
 
 export default Footer;
 const TheFooter = styled.footer`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   height: 130px;
   background-color: #000;
   ${({ theme }) => theme.common.flexCenter}

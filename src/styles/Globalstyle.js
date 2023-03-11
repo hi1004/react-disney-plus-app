@@ -8,11 +8,13 @@ ${css`
     box-sizing: border-box;
   }
   body {
+    position: relative;
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 1.4;
     background-color: #040714;
     color: #f9f9f9;
     word-break: break-word;
+    padding-bottom: 130px;
   }
   a {
     text-decoration: none;
