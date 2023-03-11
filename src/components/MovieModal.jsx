@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MdOutlineClose } from 'react-icons/md';
+import YouTube from 'react-youtube';
 import styled, { css } from 'styled-components';
+import { VscMute, VscUnmute } from 'react-icons/vsc';
+import axios from '../api/axios';
 import { media } from '../styles/theme';
 
 const MovieModal = ({
   backdrop_path,
   title,
+  id,
   overview,
   name,
   release_date,
@@ -13,6 +17,29 @@ const MovieModal = ({
   vote_average,
   setMovieModalOpen,
 }) => {
+  const [movie, setMovie] = useState([]);
+  const [isStart, setIsStart] = useState(false);
+  const [movieSound, setMovieSound] = useState(false);
+  const player = useRef();
+
+  const fetchData = async () => {
+    try {
+      const { data: movieDetail } = await axios.get(`movie/${id}`, {
+        params: { append_to_response: 'videos' },
+      });
+      setMovie(movieDetail);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsStart(true);
+    }, 500);
+  }, []);
   return (
     <Presentation>
       <div className="wrapper-modal" role="presentation">
@@ -25,11 +52,68 @@ const MovieModal = ({
           >
             <MdOutlineClose />
           </span>
-          <img
-            className="modal__poster-img"
-            alt={name}
-            src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
-          />
+
+          <div>
+            <img
+              className="modal__poster-img"
+              alt={name}
+              src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
+            />
+
+            {isStart && movie.videos?.results.length !== 0 && (
+              <div className="youtube__area">
+                <YouTube
+                  className={`player${isStart ? ' active' : ''}`}
+                  id="player"
+                  width="800"
+                  height="450"
+                  ref={player}
+                  key={movie.videos?.results[0].key}
+                  videoId={movie.videos?.results[0].key}
+                  title={movie.title}
+                  opts={{
+                    playerVars: {
+                      autoplay: 1,
+                      modestbranding: 1,
+                      start: 0,
+                      fs: 0,
+                      controls: 0,
+                    },
+                  }}
+                  onReady={e => {
+                    e.target.mute();
+                  }}
+                  onStateChange={e => {
+                    if (e.target.data === 1) {
+                      console.log(e.target.unMute());
+                    }
+                  }}
+                  onEnd={() => {
+                    setIsStart(false);
+                  }}
+                />
+                <div className="youtube__cover">a</div>
+                <button
+                  className="youtube__sound-button"
+                  type="button"
+                  onClick={() => {
+                    setMovieSound(!movieSound);
+                    if (!movieSound) {
+                      player.current.internalPlayer.unMute();
+                    } else {
+                      player.current.internalPlayer.mute();
+                    }
+                  }}
+                >
+                  {!movieSound ? (
+                    <VscMute className="sound-icon" />
+                  ) : (
+                    <VscUnmute className="sound-icon" />
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
           <ModalContent>
             <p className="modal__details">
               <span className="modal__user_perc" />{' '}
@@ -50,6 +134,82 @@ export default MovieModal;
 const Presentation = styled.div`
   z-index: 101;
   position: absolute;
+  .youtube__area {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 0;
+      padding-top: 56.25%;
+    }
+  }
+
+  .youtube__cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .youtube__sound-button {
+    position: absolute;
+    right: 3rem;
+    bottom: 4rem;
+    z-index: 100;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+
+    .sound-icon {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 2rem;
+      transition: 0.2s;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      width: 2.8rem;
+      height: 2.8rem;
+    }
+
+    &:hover {
+      .sound-icon {
+        color: rgba(255, 255, 255, 1);
+      }
+      &::after {
+        content: '';
+
+        border: 3px solid rgba(255, 255, 255, 1);
+      }
+    }
+  }
+
+  .player {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+  #player {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    z-index: 0;
+  }
   .wrapper-modal {
     position: fixed;
     inset: 0;

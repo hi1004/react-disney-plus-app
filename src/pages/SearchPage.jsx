@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../api/axios';
+import HomeBackground from '../assets/images/home-background.png';
+import { media } from '../styles/theme';
 
 const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -70,15 +72,29 @@ const SearchPage = () => {
 
 export default SearchPage;
 const SearchContainer = styled.section`
-  background-color: #000;
-  padding-top: 7rem;
+  padding: 8rem 2rem;
   text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  background: url(${HomeBackground}) center / cover no-repeat;
+
+  ${media.desktop`
+  grid-template-columns: repeat(2, 1fr);
+  `}
+
+  ${media.phone`
+  grid-template-columns: repeat(1, 1fr);
+
+  `}
 
   .movie {
-    flex: 1 1 auto;
-    display: inline-block;
-    padding-right: 0.5rem;
-    padding-bottom: 7rem;
+    margin-bottom: 4rem;
+    max-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     .movie__title {
       font-size: 1.2rem;
       font-weight: 600;
