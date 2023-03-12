@@ -46,9 +46,9 @@ const Main = styled.main`
   justify-content: space-between;
   height: 100vh;
   .containerWrapper {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center;  */
   }
 `;

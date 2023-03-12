@@ -25,5 +25,6 @@ module.exports = {
     camelcase: 'off',
     'consistent-return': 'off',
     'array-callback-return': 'off',
+    'import/no-unresolved': 'off',
   },
 };
