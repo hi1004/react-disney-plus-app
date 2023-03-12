@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../api/axios';
 import HomeBackground from '../assets/images/home-background.png';
+import useDebounce from '../hooks/useDebounce';
 import { media } from '../styles/theme';
 
 const SearchPage = () => {
@@ -12,6 +13,7 @@ const SearchPage = () => {
   };
   const query = useQuery();
   const searchTerm = query.get('q');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const navigate = useNavigate();
   const fetchSearchMovie = async searchText => {
     try {
@@ -25,10 +27,10 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    if (searchTerm) {
-      fetchSearchMovie(searchTerm);
+    if (debouncedSearchTerm) {
+      fetchSearchMovie(debouncedSearchTerm);
     }
-  }, [searchTerm]);
+  }, [debouncedSearchTerm]);
 
   if (searchResults.length > 0) {
     return (
