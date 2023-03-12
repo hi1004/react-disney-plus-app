@@ -1,3 +1,10 @@
+import {
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,6 +17,23 @@ const Nav = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const inputEl = useRef();
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setIsLoggedIn(true);
+        if (pathname === '/') {
+          navigate('/main');
+        }
+      } else {
+        navigate('/');
+      }
+    });
+  }, [auth, navigate]);
 
   const scrollHandler = () => {
     const isShow = window.scrollY > 50;
@@ -36,31 +60,75 @@ const Nav = () => {
     inputEl.current.focus();
   };
 
+  const handleAuth = () => {
+    signInWithPopup(auth, provider)
+      .then(result => {
+        setUserData(result.user);
+      })
+      .catch(e => {
+        throw new Error(e);
+      });
+  };
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        setUserData({});
+        navigate('/');
+      })
+      .catch(e => {
+        throw new Error(e);
+      });
+  };
+
   return (
     <NavWrapper show={show}>
-      <Logo href="/">
+      <Logo href={isLoggedIn ? '/main' : '/'}>
         <img src={logo} alt="Disney Plus Logo" />
       </Logo>
       {pathname === '/' ? (
-        <Login>LOGIN</Login>
+        <Login onClick={handleAuth}>ログイン</Login>
       ) : (
-        <Search>
-          <AiOutlineSearch className="search__icon" onClick={onClickHandler} />
-          <Input
-            className="nav__input"
-            value={searchValue}
-            type="text"
-            placeholder="映画を検索してください。"
-            onChange={onChange}
-            ref={inputEl}
-          />
-        </Search>
+        <div className="user-search">
+          <Search>
+            <AiOutlineSearch
+              className="search__icon"
+              onClick={onClickHandler}
+            />
+            <Input
+              className="nav__input"
+              value={searchValue}
+              type="text"
+              placeholder="映画を検索してください。"
+              onChange={onChange}
+              ref={inputEl}
+            />
+          </Search>
+          <SignOut onClick={handleSignOut}>ログアウト</SignOut>
+          <UserImg src={userData.photoURL} alt={userData.displayName} />
+        </div>
       )}
     </NavWrapper>
   );
 };
 
 export default Nav;
+
+const SignOut = styled.div`
+  position: relative;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.4s;
+  &:hover {
+    color: #eea804;
+  }
+`;
+
+const UserImg = styled.img`
+  border-radius: 50%;
+  width: 48px;
+`;
+
 const Login = styled.a`
   background-color: rgba(0, 0, 0, 0.6);
   padding: 8px 16px;
@@ -72,7 +140,7 @@ const Login = styled.a`
 
   &:hover {
     background-color: #f9f9f9;
-    color: #9f9c9c;
+    color: #5a5a5a;
     border-color: transparent;
   }
 `;
@@ -128,6 +196,11 @@ const NavWrapper = styled.nav`
   padding: 0 60px;
   letter-spacing: 16px;
   z-index: 100;
+  .user-search {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 
   &::after {
     content: '';
