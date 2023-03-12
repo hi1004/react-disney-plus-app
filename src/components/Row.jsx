@@ -203,9 +203,8 @@ const RowPostes = styled.div`
     width: 100%;
     max-height: 144px;
     margin-right: 10px;
-    transform: transform 0.45s;
+    transition: transform 0.45s;
     border-radius: 4px;
-    transition: 0.2s;
     cursor: pointer;
     position: relative;
 
@@ -218,7 +217,7 @@ const RowPostes = styled.div`
 
     &:hover {
       transform: scale(1.02);
-      filter: contrast(0.5);
+      filter: contrast(0.8);
     }
   }
 `;
