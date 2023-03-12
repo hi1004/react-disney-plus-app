@@ -35,7 +35,7 @@ const MainPage = () => {
 };
 
 export default MainPage;
-const Container = styled.main`
+const Container = styled.div`
   position: relative;
   overflow-x: hidden;
   display: block;

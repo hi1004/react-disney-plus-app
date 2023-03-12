@@ -14,7 +14,6 @@ ${css`
     background-color: #040714;
     color: #f9f9f9;
     word-break: break-word;
-    padding-bottom: 130px;
   }
   a {
     text-decoration: none;

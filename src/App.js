@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import Nav from './components/Nav';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
@@ -12,11 +12,14 @@ import Footer from './components/Footer';
 
 const Layout = () => {
   return (
-    <div>
-      <Outlet />
+    <Main>
+      <div className="containerWrapper">
+        <Outlet />
+      </div>
       <Nav />
+
       <Footer />
-    </div>
+    </Main>
   );
 };
 
@@ -38,3 +41,15 @@ const App = () => {
 };
 
 export default App;
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  .containerWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;

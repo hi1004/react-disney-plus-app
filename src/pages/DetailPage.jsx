@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../api/axios';
 import error404 from '../assets/images/404_error.png';
+import { media } from '../styles/theme';
 
 const DetailPage = () => {
   const { movieId } = useParams();
@@ -62,8 +63,18 @@ const MovieDetail = styled.section`
       background-repeat: no-repeat;
       margin: 0 auto;
     }
-  }
-  h2 {
-    font-size: 2rem;
+    ${media.desktop`
+      img{
+        width: 100%;
+      }
+      .error {
+        background-size: 100%;
+        height: 800px;
+      }
+    `}
+
+    h2 {
+      font-size: 2rem;
+    }
   }
 `;
