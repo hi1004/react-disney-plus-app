@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import { VscMute, VscUnmute } from 'react-icons/vsc';
 import axios from '../api/axios';
 import { media } from '../styles/theme';
+import useOnClickOutside from '../hooks/useOnClickOutside';
 
 const MovieModal = ({
   backdrop_path,
@@ -21,6 +22,7 @@ const MovieModal = ({
   const [isStart, setIsStart] = useState(false);
   const [movieSound, setMovieSound] = useState(false);
   const player = useRef();
+  const modalEl = useRef();
 
   const fetchData = async () => {
     try {
@@ -29,7 +31,7 @@ const MovieModal = ({
       });
       setMovie(movieDetail);
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
   };
   useEffect(() => {
@@ -40,10 +42,12 @@ const MovieModal = ({
       setIsStart(true);
     }, 500);
   }, []);
+
+  useOnClickOutside(modalEl, () => setMovieModalOpen(false));
   return (
     <Presentation>
       <div className="wrapper-modal" role="presentation">
-        <div className="modal">
+        <div className="modal" ref={modalEl}>
           <span
             role="button"
             tabIndex="0"
@@ -82,11 +86,6 @@ const MovieModal = ({
                   }}
                   onReady={e => {
                     e.target.mute();
-                  }}
-                  onStateChange={e => {
-                    if (e.target.data === 1) {
-                      console.log(e.target.unMute());
-                    }
                   }}
                   onEnd={() => {
                     setIsStart(false);
