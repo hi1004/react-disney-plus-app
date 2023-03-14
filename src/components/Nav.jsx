@@ -33,11 +33,11 @@ const Nav = () => {
           navigate('/main');
         }
       } else {
+        setIsLoggedIn(false);
         navigate('/');
       }
     });
   }, [auth, navigate]);
-
   const scrollHandler = () => {
     const isShow = window.scrollY > 50;
     setShow(isShow);
