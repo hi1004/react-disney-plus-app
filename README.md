@@ -130,11 +130,11 @@
     </details>
 </details>
 
-<details　open>
-  <summary >
-    📌 MainPage（映画検索、ジャンル別映画情報、モーダル）
-  </summary>
-  
+<details>
+    <summary >
+      📌 MainPage（映画検索、ジャンル別映画情報、モーダル）
+    </summary>
+    
 - 映画検索機能を実装 (Nav.jsx)
   1. 検索Iconをクリックすると、`onClickHandler`イベントが発生し、`useRef`で`input要素`をFocusします。
       ```jsx
