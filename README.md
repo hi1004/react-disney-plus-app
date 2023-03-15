@@ -1,7 +1,7 @@
 # 🎦 React Disney Plus App-Clone 
 
-## [DEMO - DISNEY PLUS APP](http://bit.ly/3JGApJn)
-- **Google**アカウントでログリンできます。
+## [DEMO - DISNEY PLUS APP](https://react-disney-plus-app-e1dbc.web.app/)
+- **Google**アカウントでログインできます。
 
 ## 1. プロジェクト紹介
 
