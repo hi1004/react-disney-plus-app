@@ -1,6 +1,6 @@
 # 🎦 React Disney Plus App-Clone 
 
-## [DEMO - DISNEY PLUS APP](https://react-disney-plus-app-e1dbc.web.app/)
+## [DEMO - DISNEY PLUS APP](http://bit.ly/3JGApJn)
 
 ## 1. プロジェクト紹介
 
