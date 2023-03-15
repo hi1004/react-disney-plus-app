@@ -4,7 +4,7 @@
 
 ## 1. プロジェクト紹介
 
-![LOGIN](https://user-images.githubusercontent.com/80688093/225327633-a57f8463-5411-4b03-b7d2-cc82454a87ff.png)
+![LOGIN](https://user-images.githubusercontent.com/80688093/225328347-98696023-a454-49f6-8564-973a8c125a6e.png)
 
 
 ### 📌 概要
@@ -12,7 +12,7 @@
 
 > [TMDB(The Movie Database) API](https://www.themoviedb.org/)を使ってDisney Plusをクーロンコーディングし、リニューアルしたレスポンシブ対応Webアプリケーションです。
 
-> 今まで検索映画情報サイトを何回か作ってきましたが、勉強してきたReact.jsでSPAを実装し、Firbaseでログイン機能やデプロイしたことは初めての挑戦でした。
+> 今まで検索映画情報サイトを何回か作ってきましたが、勉強してきたReact.jsでSPAを実装し、Firbaseでログイン機能やGithub Actionでデプロイしたことは初めてでした。
 
 > なるべくReactのhooksを活用するようにしたり、styled componentsでUI/UXに取り組んだりすぐにでも実務に活かせるようにしました。
 
@@ -40,6 +40,8 @@
   <summary>
     📌 LoginPage(ログイン)    
   </summary>
+
+  ![login](https://user-images.githubusercontent.com/80688093/225330270-efb12a79-2fe8-4274-b267-bc399c637b7d.gif)
   
 - Firebaseでログイン/ログアウト機能を実装[(Nav.jsx)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Nav.jsx)   
   1. `styled components`で作成したLogInボタンをクリックすると、`handleAuth`関数が実行されます。
@@ -145,7 +147,9 @@
     <summary >
       📌 MainPage(映画検索、ジャンル別映画情報、モーダル)
     </summary>
-    
+
+  ![main](https://user-images.githubusercontent.com/80688093/225334752-01f9d18f-7039-4b60-9da4-b634a9a1d769.gif)
+  
 - 映画検索機能を実装 [Nav.jsx](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Nav.jsx)
   1. 検索Iconをクリックすると、`onClickHandler`イベントが発生し、`useRef`で`input要素`をFocusします。
       ```jsx
@@ -331,6 +335,9 @@
   <summary>
     📌 SearchPage(QueryStringを活用した検索) 
   </summary>
+
+  ![search](https://user-images.githubusercontent.com/80688093/225338155-851cc3e4-9fde-4b45-89cf-d4e205fd5588.gif)
+
   
 - `QueryString`を活用した検索[(SearchPage.jsx)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/pages/SearchPage.jsx)
     1. `MainPage`から`input`に検索した`value`が`useQuery`の`q`である`searchTerm`がアップデートされます。その後`fetchSearchMovie`を実行すると、`setSearchResults`にデータが入りページが動的に動くようになります。
