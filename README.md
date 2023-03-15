@@ -279,7 +279,7 @@
       };
       ```
   </details>
-  <details open>
+  <details>
       <summary>
         2. モーダルを開いた時、動画の音が操作できないイシュー
       </summary>
