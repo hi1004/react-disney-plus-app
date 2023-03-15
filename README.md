@@ -4,7 +4,8 @@
 
 ## 1. プロジェクト紹介
 
-![login](https://user-images.githubusercontent.com/80688093/225303632-cc142503-3862-4f54-b73a-472c0144a033.png)
+![LOGIN](https://user-images.githubusercontent.com/80688093/225327633-a57f8463-5411-4b03-b7d2-cc82454a87ff.png)
+
 
 ### 📌 概要
 > [Disney Plus](https://www.disneyplus.com/)サイトを参考にしました。
