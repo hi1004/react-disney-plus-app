@@ -33,6 +33,7 @@ const Nav = () => {
           navigate('/main');
         }
       } else {
+        setIsLoggedIn(false);
         navigate('/');
       }
     });

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import axios from '../api/axios';
 import usePromise from '../hooks/usePromise';
-// import { media } from '../styles/theme';
 import MovieModal from './MovieModal';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -57,6 +55,7 @@ const Row = ({ title, id, fetchUrl }) => {
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y]}
         loop
+        speed={2000}
         navigation
         pagination={{ clickable: true }}
         breakpoints={{
