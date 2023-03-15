@@ -7,7 +7,9 @@
 ![login](https://user-images.githubusercontent.com/80688093/225303632-cc142503-3862-4f54-b73a-472c0144a033.png)
 
 ### 📌 概要
-> [Disney Plus](https://www.disneyplus.com/)を[TMDB(The Movie Database) API](https://www.themoviedb.org/)でクーロンコーディングし、リニュアルしたレスポンシブ対応Webアプリケーションです。
+> [Disney Plus](https://www.disneyplus.com/)サイトを参考にしました。
+
+> [TMDB(The Movie Database) API](https://www.themoviedb.org/)を使ってDisney Plusをクーロンコーディングし、リニューアルしたレスポンシブ対応Webアプリケーションです。
 
 > 今まで検索映画情報サイトを何回か作ってきましたが、勉強してきたReact.jsでSPAを実装し、Firbaseでログイン機能やデプロイしたことは初めての挑戦でした。
 
