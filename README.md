@@ -148,7 +148,7 @@
       📌 MainPage(映画検索、ジャンル別映画情報、モーダル)
     </summary>
 
-  ![main](https://user-images.githubusercontent.com/80688093/225334752-01f9d18f-7039-4b60-9da4-b634a9a1d769.gif)
+  ![main](https://user-images.githubusercontent.com/80688093/225371912-95a683a6-e86e-4238-a643-32b2632649a2.gif)
   
 - 映画検索機能を実装 [Nav.jsx](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Nav.jsx)
   1. 検索Iconをクリックすると、`onClickHandler`イベントが発生し、`useRef`で`input要素`をFocusします。
