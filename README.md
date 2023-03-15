@@ -28,7 +28,7 @@
     📌 LoginPage(ログイン)    
   </summary>
   
-- Firebaseでログイン/ログアウト機能を実装(Nav.jsx)   
+- Firebaseでログイン/ログアウト機能を実装[(Nav.jsx)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Nav.jsx)   
   1. `styled components`で作成したLogInボタンをクリックすると、`handleAuth`関数が実行されます。
       ```html
       <Login onClick={handleAuth}>ログイン</Login>
@@ -130,10 +130,10 @@
 
 <details>
     <summary >
-      📌 MainPage（映画検索、ジャンル別映画情報、モーダル）
+      📌 MainPage(映画検索、ジャンル別映画情報、モーダル)
     </summary>
     
-- 映画検索機能を実装 (Nav.jsx)
+- 映画検索機能を実装 [Nav.jsx](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Nav.jsx)
   1. 検索Iconをクリックすると、`onClickHandler`イベントが発生し、`useRef`で`input要素`をFocusします。
       ```jsx
       <Search>
@@ -170,11 +170,91 @@
         navigate(`/search?q=${e.target.value}`);
       };
       ```
-- `Youtube Iframe`で予告動画の導入した`Banner`
-- ジャンル別映画情報とモーダル
+- `Youtube Iframe`で予告動画の導入した`Banner`[Banner.jsx](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Banner.jsx)
+  1. [usePromise(Custom hook)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/hooks/usePromise.js)を作り、`axios`で映画の動画があるデータをランダムに得られるようにしました。[[参照](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Banner.jsx#L15-L51)]
+  
+  2. `setTimeOut`で３秒後に動画が再生できるようにしました。
+        ```js
+          useEffect(() => {
+            setTimeout(() => {
+              setIsStart(true);
+            }, 3000);
+          }, []);
+        ```
+  3. 動画が終わると`setIsStart`が`false`になり、`BannerHeader`の背景イメージに変わります。[[参照](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Banner.jsx#L69-L103)]
+
+  4. loading 実装
+      ```js
+        if (loading)
+         return (
+          <BannerHeader>
+            <Loding />
+          </BannerHeader>
+        );
+      ``` 
+  5. `description`の文字列を100の長さまでにし、余りは`...`に変える`truncate`関数を実装
+      ```jsx
+      const truncate = (str, n) => {
+        return str?.length > n ? `${str.substring(0, n)}...` : str;
+      };
+      <p className="description">{truncate(movie.overview, 100)}</p>
+      ```
+      
+       
+- ジャンル別映画情報([Row.jsx](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Row.jsx))
+  1. loading中には`skeleton UI`でローディングアニメーションを実装しました。
+      ```jsx
+        if (loading)
+      return (
+      <Skeleton>
+        <li className="row__poster skeleton">
+          <div className="poster" />
+          <div className="poster" />
+          <div className="poster" />
+          <div className="poster" />
+          <div className="poster" />
+          <div className="poster" />
+          <div className="poster" />
+        </li>
+      </Skeleton>
+      ```
+  2. `Swiper.js`のライブラリを使って、スライド機能を実装しました。[[参照]](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/Row.jsx#L57-L96)
+
+  3. Rowコンポーネントの映画の画像をクリックすると`onClickイベント`が発生し、モーダルが開きます。
+      ```jsx
+      const [modalOpen, setModalOpen] = useState(false);
+      const [movieSelected, setMovieSelected] = useState({});
+      const onClickHandler = movie => {
+        setModalOpen(true);
+        setMovieSelected(movie);
+      };
+
+      {modalOpen && (
+        <MovieModal {...movieSelected} setMovieModalOpen={setModalOpen} />
+      )}
+      ```
+
+- モーダル([MovieModal.jsx](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/MovieModal.jsx))
+    1. Bannerと同じく`Youtube Iframe`で予告動画の導入し、音のコントロール機能を追加しました。 [[参照]](https://github.com/hi1004/react-disney-plus-app/blob/main/src/components/MovieModal.jsx#L67-L114)
+    2. 動画は0.5秒後に再生します。
+        ```js
+        useEffect(() => {
+          setTimeout(() => {
+            setIsStart(true);
+          }, 500);
+        }, []);
+        ```
+    3. [useOnClickOutside(Custom hook)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/hooks/useOnClickOutside.js)と`useRef`でモーダルの外をクリックしたらモーダルが消えるようにしました。
+        ```jsx
+        import useOnClickOutside from '../hooks/useOnClickOutside';
+        const modalEl = useRef();
+        // RowコンポーネントからもらったsetMovieModalOpenのpropsをfalseに変更
+        useOnClickOutside(modalEl, () => setMovieModalOpen(false));
+        ```
+   
 
   ### ⚠️ トラブルシューティング
-    <details>
+  <details>
       <summary>
         1. Mainページで一文字を検索したらinputタグのFocusが解除されるイシュー
       </summary>
@@ -198,5 +278,98 @@
         );
       };
       ```
-    </details>
+  </details>
+  <details open>
+      <summary>
+        2. モーダルを開いた時、動画の音が操作できないイシュー
+      </summary>
+
+  ## 🤔 Issue
+    - Youtubeの音を直接に操作できない
+    - buttonをクリックして操作することができない
+  ## ✅ Solution
+    -  `useRef` hookを使って`player.current.internalPlayer`に`mute`、`unMuteメソッド`を条件分岐にしたらコントロール操作を解決
+        ```jsx
+          const [movieSound, setMovieSound] = useState(false);
+          const player = useRef();
+
+          <button
+            className="youtube__sound-button"
+            type="button"
+            onClick={() => {
+              setMovieSound(!movieSound);
+              if (!movieSound) {
+                player.current.internalPlayer.unMute();
+              } else {
+                player.current.internalPlayer.mute();
+              }
+            }}
+          >
+            {!movieSound ? (
+              <VscMute className="sound-icon" />
+            ) : (
+              <VscUnmute className="sound-icon" />
+            )}
+          </button>
+        ```
+  </details>
+</details>
+<details>
+  <summary>
+    📌 SearchPage(QueryStringを活用した検索) 
+  </summary>
+  
+- `QueryString`を活用した検索[(SearchPage.jsx)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/pages/SearchPage.jsx)
+    1. `MainPage`から`input`に検索した`value`が`useQuery`の`q`である`searchTerm`がアップデートされます。その後`fetchSearchMovie`を実行すると、`setSearchResults`にデータが入りページが動的に動くようになります。
+        ```jsx
+        const [searchResults, setSearchResults] = useState([]);
+        const useQuery = () => {
+          return new URLSearchParams(useLocation().search);
+        };
+        const query = useQuery();
+        const searchTerm = query.get('q');
+        const fetchSearchMovie = async searchText => {
+          try {
+            const response = await axios.get(
+              `/search/multi?include_adult=false&query=${searchText}`,
+            );
+            setSearchResults(response.data.results);
+          } catch (e) {
+            throw new Error(e);
+          }
+        };
+        ```
+    2. [useDebounce(Cusotm hooks)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/hooks/useDebounce.js)を作って検索している間はAPIの要請を制限し、アプリケーションの性能を高めました。
+        ```jsx
+        const debouncedSearchTerm = useDebounce(searchTerm, 500);
+        useEffect(() => {
+        if (debouncedSearchTerm) {
+            fetchSearchMovie(debouncedSearchTerm);
+          }
+        }, [debouncedSearchTerm]);
+        ```
+</details>
+<details>
+  <summary>
+    📌 DetailPage(詳細映画ページ) 
+  </summary>
+  
+- 詳細映画ページ[(DetailPage.jsx)](https://github.com/hi1004/react-disney-plus-app/blob/main/src/pages/DetailPage.jsx)
+    1. SearchPageからのデータで詳細映画ページへ移動します。そこでは映画ポスターやタイトル、発売日が現れますが、情報がない場合404ページのイメージに変えました。
+        ```jsx
+        import error404 from '../assets/images/404_error.png';
+        <h2>{movie.title || movie.original_title}</h2>
+        <p>{movie?.release_date}</p>
+        {!error && movie.backdrop_path !== undefined && (
+          <img
+            src={
+              movie?.backdrop_path !== null
+                ? `https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`
+                : error404
+            }
+            alt={movie.title}
+          />
+        )}
+        {error && <div className="error" />}
+        ```
 </details>
