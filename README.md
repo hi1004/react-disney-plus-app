@@ -1,13 +1,21 @@
-# React Disney Plus App-Clone
+# 🎦 React Disney Plus App-Clone 
 
-[DEMO](https://react-disney-plus-app-e1dbc.web.app/)
+## [DEMO - DISNEY PLUS APP](https://react-disney-plus-app-e1dbc.web.app/)
 
 ## 1. プロジェクト紹介
 
+![login](https://user-images.githubusercontent.com/80688093/225303632-cc142503-3862-4f54-b73a-472c0144a033.png)
+
 ### 📌 概要
+> [Disney Plus](https://www.disneyplus.com/)を[TMDB(The Movie Database) API](https://www.themoviedb.org/)でクーロンコーディングし、リニュアルしたレスポンシブ対応Webアプリケーションです。
 
+> 今まで検索映画情報サイトを何回か作ってきましたが、勉強してきたReact.jsでSPAを実装し、Firbaseでログイン機能やデプロイしたことは初めての挑戦でした。
 
+> なるべくReactのhooksを活用するようにしたり、styled componentsでUI/UXに取り組んだりすぐにでも実務に活かせるようにしました。
 
+> 一人で開発を行ったので試行錯誤はたくさんありましたが、課題に直面した時も諦めず最後まで頑張りました。
+
+<br/>
 
 ## 2. 開発環境
 
@@ -20,6 +28,8 @@
 ### 2.2 パッケージモジュール
 
 <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=Yarn&logoColor=white"> <img src="https://img.shields.io/badge/Create_React_App-09D3AC?style=for-the-badge&logo=Create React App&logoColor=white"><br/><img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white"> <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white">  <img src="https://img.shields.io/badge/React Router-CA4245?style=for-the-badge&logo=React Router&logoColor=white"><br/> <img src="https://img.shields.io/badge/.ENV-ECD53F?style=for-the-badge&logo=.ENV&logoColor=white"> <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white"> <img src="https://img.shields.io/badge/Swiper-6332F6?style=for-the-badge&logo=Swiper&logoColor=white">
+
+<br/>
 
 ## 3. コア機能
 
