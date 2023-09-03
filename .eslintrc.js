@@ -26,5 +26,6 @@ module.exports = {
     'consistent-return': 'off',
     'array-callback-return': 'off',
     'import/no-unresolved': 'off',
+    'no-param-reassign': 'off',
   },
 };

@@ -9,7 +9,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from '../assets/images/logo.svg';
+import { removeUser, setUser } from '../store/userSlice';
 
 const Nav = () => {
   const [show, setShow] = useState(false);
@@ -20,10 +22,8 @@ const Nav = () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const initialUserData = localStorage.getItem('userData')
-    ? JSON.parse(localStorage.getItem('userData'))
-    : {};
-  const [userData, setUserData] = useState(initialUserData);
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.user);
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -67,8 +67,14 @@ const Nav = () => {
   const handleAuth = () => {
     signInWithPopup(auth, provider)
       .then(result => {
-        setUserData(result.user);
-        localStorage.setItem('userData', JSON.stringify(result.user));
+        dispatch(
+          setUser({
+            id: result.user.uid,
+            email: result.user.email,
+            displayName: result.user.displayName,
+            photoURL: result.user.photoURL,
+          }),
+        );
       })
       .catch(e => {
         throw new Error(e);
@@ -76,9 +82,9 @@ const Nav = () => {
   };
 
   const handleSignOut = () => {
-    signOut(auth)
+    signOut(auth);
+    dispatch(removeUser())
       .then(() => {
-        setUserData({});
         navigate('/');
       })
       .catch(e => {
